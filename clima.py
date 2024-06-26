@@ -14,6 +14,7 @@ import requests
 url = "http://api.meteored.cl/index.php?api_lang=cl&localidad=18578&affiliate_id=59lbfhamrp71&v=3.0"
 clima_raw = requests.get(url).json()
 clima_dataframe = pandas.DataFrame.from_dict(clima_raw)
+print(clima_dataframe)
 
 # Procesa los dias y selecciona solo los datos que se necesitan
 dias = []
