@@ -18,17 +18,24 @@ clima_dataframe = pandas.DataFrame.from_dict(clima_raw)
 # Procesa los dias y selecciona solo los datos que se necesitan
 dias = []
 for dia in clima_dataframe["day"]:
+    # Consigue la fecha, lo convierte en una lista y agrega "-" en
+    # los lugares necesarios para hacerla leible Y vuelve a concatenarla en una string
+    date = list(dia["date"])
+    date[6:6] = "-"
+    date[4:4] = "-"
+    date = "".join(date)
+    
     nombre = dia["name"]
     temperatura_minima = int(dia["tempmin"])
     temperatura_maxima = int(dia["tempmax"])
        
-    informacion = [nombre, temperatura_minima, temperatura_maxima]
+    informacion = [date, nombre, temperatura_minima, temperatura_maxima]
     dias.append(informacion)
        
 # Los datos se aplican a un dataframe para utlizarlos mejor 
 df_temperaturas = pandas.DataFrame(
     data = dias,
-    columns = ["Dia","Temperatura minima","Temperatura maxima"],
+    columns = ["Fecha","Dia","Temperatura minima","Temperatura maxima"],
 )
 print(df_temperaturas)
 
@@ -58,7 +65,7 @@ plt.bar(
 # Agregar labels y titulos
 plt.xlabel('Día')
 plt.ylabel('Temperatura (C°)')
-plt.title('Comparacion temperaturas proyectadas semana de 24-06-2024')
+plt.title(f'Comparacion temperaturas proyectadas semana de {df_temperaturas["Fecha"][0]}')
 plt.legend()
 
 # Mostrar el plot
